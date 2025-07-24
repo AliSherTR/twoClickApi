@@ -1,0 +1,37 @@
+  GNU nano 7.2                                                             ejabberd.yml                                                                      
+  mod_privacy: {}
+  mod_private: {}
+  mod_proxy65:
+    access: local
+    max_connections: 5
+  mod_pubsub:
+    access_createnode: pubsub_createnode
+    plugins:
+      - flat
+      - pep
+    force_node_config:
+      storage:bookmarks:
+        access_model: whitelist
+  mod_push: {}
+  mod_push_keepalive: {}
+  mod_register:
+    ip_access: trusted_network
+  mod_roster:
+    versioning: true
+    db_type: sql
+  mod_s2s_bidi: {}
+  mod_s2s_dialback: {}
+  mod_shared_roster: {}
+  mod_stream_mgmt:
+    resend_on_timeout: if_offline
+  mod_stun_disco: {}
+  mod_vcard:
+    db_type: sql
+  mod_vcard_xupdate: {}
+  mod_version:
+    show_os: false
+
+### Local Variables:
+### mode: yaml
+### End:
+### vim: set filetype=yaml tabstop=8

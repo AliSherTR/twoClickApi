@@ -15,14 +15,16 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  loginType String
-  isActive  Boolean  @default(true)
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  xmppUserId   String
+  xmppPassword String
+  email        String   @unique
+  password     String
+  loginType    String
+  isActive     Boolean  @default(true)
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   sessions Session[] // Add this line for the relation
 }
