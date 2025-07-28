@@ -25,7 +25,6 @@ export async function verifyGoogleToken(token: string): Promise<GoogleUser> {
       sub: payload.sub,
     };
   } catch (error: any) {
-    console.error("Google token verification failed:", error);
     if (error.message.includes("Invalid token signature")) {
       throw new AppError(
         "Invalid Google token signature. Please check the token or Client ID.",

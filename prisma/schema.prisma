@@ -16,7 +16,7 @@ datasource db {
 
 model User {
   id           String   @id @default(cuid())
-  xmppUserId   String
+  xmppUserId   String   @unique
   xmppPassword String
   email        String   @unique
   password     String
@@ -32,7 +32,8 @@ model User {
 model Session {
   id        String   @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [xmppUserId])
+  size      String
   name      String
   createdAt DateTime @default(now())
   expiresAt DateTime

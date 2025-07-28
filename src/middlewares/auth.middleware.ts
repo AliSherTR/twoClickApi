@@ -8,6 +8,7 @@ declare global {
     interface Request {
       user?: {
         id: string;
+        xmppUserId: string;
         email: string;
         name: string | null;
         googleId: string;
@@ -31,8 +32,6 @@ export const authMiddleware = async (
     }
 
     const token = authHeader.split(" ")[1];
-
-    console.log(token);
     if (!token) {
       throw new AppError("Invalid token format.", 401);
     }
@@ -46,6 +45,7 @@ export const authMiddleware = async (
       where: { email: decoded.email },
       select: {
         id: true,
+        xmppUserId: true,
         email: true,
         name: true,
         loginType: true,
@@ -53,12 +53,13 @@ export const authMiddleware = async (
     });
 
     if (!user) {
-      throw new AppError("User not found.", 401);
+      throw new AppError("You are not authorized to visit this route.", 401);
     }
 
     // Attach user to request
     req.user = {
       id: user.id,
+      xmppUserId: user.xmppUserId,
       email: user.email,
       name: user.name,
       googleId: "",

@@ -1,23 +1,23 @@
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catch-async";
-import { Prisma } from "../../generated/prisma";
 import prisma from "../../db/database";
 import { AppError } from "../../utils/app-error";
 
 export const createSession = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.user?.id;
+    const xmppUserId = req.user?.xmppUserId;
 
-    const { name } = req.body;
+    const { name, size } = req.body;
 
-    if (!userId || !name) {
+    if (!xmppUserId || !name || !size) {
       throw new AppError("Invalid Data", 400);
     }
 
     const newSession = await prisma.session.create({
       data: {
-        user: { connect: { id: userId } },
+        user: { connect: { id: xmppUserId } },
         name,
+        size,
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // expires in 24 hours
       },
     });
@@ -28,6 +28,32 @@ export const createSession = catchAsync(
       data: {
         newSession,
       },
+    });
+  }
+);
+
+export const getAllSessions = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const xmppUserId = req.user?.xmppUserId;
+
+    const sessionsCreateByUser = await prisma.session.findMany({
+      where: {
+        userId: xmppUserId,
+      },
+    });
+
+    if (!sessionsCreateByUser) {
+      return res.status(404).json({
+        status: "success",
+        message: `No sessions created by ${req.user?.email}`,
+        data: [],
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Sessions fetched successfully",
+      data: sessionsCreateByUser,
     });
   }
 );
