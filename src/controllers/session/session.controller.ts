@@ -15,10 +15,10 @@ export const createSession = catchAsync(
 
     const newSession = await prisma.session.create({
       data: {
-        user: { connect: { id: xmppUserId } },
+        user: { connect: { xmppUserId } }, // <-- FIXED
         name,
         size,
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // expires in 24 hours
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
       },
     });
 
