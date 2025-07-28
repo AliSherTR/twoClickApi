@@ -57,3 +57,29 @@ export const getAllSessions = catchAsync(
     });
   }
 );
+
+export const getSessionById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = JSON.parse(req.query.id as string);
+
+    const session = await prisma.session.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!session) {
+      return res.status(404).json({
+        success: "false",
+        message: "The requested session cannot be found",
+        data: {},
+      });
+    }
+
+    return res.status(404).json({
+      success: "true",
+      message: "Session fetched successfully",
+      data: session,
+    });
+  }
+);
