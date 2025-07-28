@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
+router.get("/:id", authMiddleware, getSessionById);
 router.post("/", authMiddleware, createSession);
 router.get("/", authMiddleware, getAllSessions);
-router.get("/:id", authMiddleware, getSessionById);
 export default router;

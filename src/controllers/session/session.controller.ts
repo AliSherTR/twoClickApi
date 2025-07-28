@@ -60,8 +60,7 @@ export const getAllSessions = catchAsync(
 
 export const getSessionById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const id = JSON.parse(req.query.id as string);
-
+    const id = JSON.stringify(req.params.id as string);
     const session = await prisma.session.findUnique({
       where: {
         id: id,
