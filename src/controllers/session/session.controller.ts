@@ -76,7 +76,7 @@ export const getSessionById = catchAsync(
       });
     }
 
-    return res.status(404).json({
+    return res.status(200).json({
       success: "true",
       message: "Session fetched successfully",
       data: session,
