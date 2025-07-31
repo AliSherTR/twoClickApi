@@ -35,6 +35,8 @@ model Session {
   user      User     @relation(fields: [userId], references: [xmppUserId])
   size      String
   name      String
+  fileCount String
+  sentBy    String
   createdAt DateTime @default(now())
   expiresAt DateTime
   updatedAt DateTime @updatedAt

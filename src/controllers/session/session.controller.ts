@@ -7,7 +7,7 @@ export const createSession = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const xmppUserId = req.user?.xmppUserId;
 
-    const { name, size } = req.body;
+    const { name, size, fileCount, sentBy } = req.body;
 
     if (!xmppUserId || !name || !size) {
       throw new AppError("Invalid Data", 400);
@@ -18,6 +18,8 @@ export const createSession = catchAsync(
         user: { connect: { xmppUserId } }, // <-- FIXED
         name,
         size,
+        sentBy,
+        fileCount,
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
       },
     });
