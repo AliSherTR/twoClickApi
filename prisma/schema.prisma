@@ -27,6 +27,8 @@ model User {
   updatedAt    DateTime @updatedAt
 
   sessions Session[] // Add this line for the relation
+
+  PasswordReset PasswordReset[]
 }
 
 model Session {
@@ -40,6 +42,18 @@ model Session {
   createdAt DateTime @default(now())
   expiresAt DateTime
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  tokenHash String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
 
   @@index([userId])
 }

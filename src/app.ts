@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import authRoutes from "./routes/auth/auth.route";
 import sessionRoutes from "./routes/session/session.route";
 import { globalErrorHandler } from "./middlewares/global-error-handler";
+import { verifyMailer } from "./lib/mailer";
+
 
 const app = express();
 app.use(express.json());
@@ -15,6 +17,8 @@ const PORT = process.env.PORT;
 
 app.use("/api/auth", authRoutes);
 app.use("/session", sessionRoutes);
+
+
 
 app.get("/.well-known/assetlinks.json", (req: Request, res: Response) => {
   res.status(200).json([
@@ -31,6 +35,7 @@ app.get("/.well-known/assetlinks.json", (req: Request, res: Response) => {
   ]);
 });
 
+verifyMailer().catch(() => { });
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
