@@ -5,7 +5,9 @@ import { createRawToken, hashToken } from "../../utils/reset.token";
 import { sendResetEmail } from "../../utils/send-reset.email";
 
 const RESET_MINUTES = 15;
-const APP_ORIGIN = process.env.APP_ORIGIN ?? "https://your.app";
+const APP_ORIGIN = process.env.APP_ORIGIN ?? "http://localhost:3000";
+// const APP_ORIGIN = "http://localhost:3000";
+
 
 export const forgotPassword = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {

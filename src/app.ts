@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import authRoutes from "./routes/auth/auth.route";
 import sessionRoutes from "./routes/session/session.route";
+import resetPageRouter from "./routes/auth/reset-page.route"
 import { globalErrorHandler } from "./middlewares/global-error-handler";
 import { verifyMailer } from "./lib/mailer";
+import path from "path";
 
 
 const app = express();
@@ -14,11 +16,15 @@ app.use(express.static("src"));
 dotenv.config();
 
 const PORT = process.env.PORT;
-
+app.use(resetPageRouter);
 app.use("/api/auth", authRoutes);
 app.use("/session", sessionRoutes);
 
 
+app.use("/static", (req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
+  next();
+}, require("express").static(path.join(process.cwd(), "public")));
 
 app.get("/.well-known/assetlinks.json", (req: Request, res: Response) => {
   res.status(200).json([
