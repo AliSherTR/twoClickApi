@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import authRoutes from "./routes/auth/auth.route";
 import sessionRoutes from "./routes/session/session.route";
 import resetPageRouter from "./routes/auth/reset-page.route"
+import notificationRouter from "./routes/notification/notification.route";
 import { globalErrorHandler } from "./middlewares/global-error-handler";
 import { verifyMailer } from "./lib/mailer";
 import path from "path";
@@ -19,6 +20,7 @@ const PORT = process.env.PORT;
 app.use(resetPageRouter);
 app.use("/api/auth", authRoutes);
 app.use("/session", sessionRoutes);
+app.use("/api", notificationRouter);
 
 
 app.use("/static", (req, res, next) => {
