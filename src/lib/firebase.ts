@@ -1,4 +1,3 @@
-// src/lib/firebase.ts
 import admin from "firebase-admin";
 
 const serviceAccount = JSON.parse(
