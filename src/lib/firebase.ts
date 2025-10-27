@@ -12,17 +12,18 @@ admin.initializeApp({
 
 export const sendPushNotification = async (fcmToken: string, senderXMPPId: string, message: string) => {
     try {
-        const notificationMessage = {
+        const payload = {
             token: fcmToken,
-            notification: {
+            data: {
                 title: "New Message from " + senderXMPPId,
                 body: message,
             },
         };
 
-        const response = await admin.messaging().send(notificationMessage);
+        const response = await admin.messaging().send(payload);
         console.log("Successfully sent message:", response);
     } catch (error) {
         console.error("Error sending message:", error);
+        throw error;
     }
 };
